@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -39,6 +40,18 @@ public class UserDaoService {//DB연결은 Section 5에서
             }
         }
         return null;//같은 id값이 없을 경우(빈 화면 출력)
+    }
+
+    public User deleteById(int id) {
+        Iterator<User> iterator = users.iterator();// 컬렉션을 열거형 타입으로 변환.(이런것도있다~)
+        while (iterator.hasNext()) {
+            User user = iterator.next();
+            if (user.getId() == id) { // id같은 데이터 있으면
+                iterator.remove();    //삭제
+                return user;// 이 때 user 반환
+            }
+        }
+        return null;//데이터를 찾지 못한 경우
     }
 
 

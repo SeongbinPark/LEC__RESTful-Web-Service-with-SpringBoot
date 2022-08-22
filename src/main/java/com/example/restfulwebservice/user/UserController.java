@@ -51,4 +51,12 @@ public class UserController {
         //응답의 Location 헤더에 URI 반환.
     }
 
+    @DeleteMapping("/users/{id}")
+    public void deleteUser(@PathVariable int id) {
+        User user = service.deleteById(id);
+
+        if (user == null) {//삭제할 데이터가 없다.
+            throw new UserNotFoundExcetiion(String.format("ID[%s] not found", id));
+        }
+    }
 }
