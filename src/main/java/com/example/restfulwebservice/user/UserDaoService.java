@@ -27,6 +27,7 @@ public class UserDaoService {//DB연결은 Section 5에서
         if (user.getId() == null) {//id없으면
             user.setId(++usersCount);//id추가해주고
         }
+        user.setJoinDate(new Date());
         users.add(user);//지금 DB역할을하는 List에 추가 후
         return user;    //id가 세팅된 user 리턴
     }
@@ -37,7 +38,7 @@ public class UserDaoService {//DB연결은 Section 5에서
                 return user; //찾는 user가 있는 경우
             }
         }
-        return null;//같은 id값이 없을 경우
+        return null;//같은 id값이 없을 경우(빈 화면 출력)
     }
 
 
