@@ -54,5 +54,15 @@ public class UserDaoService {//DB연결은 Section 5에서
         return null;//데이터를 찾지 못한 경우
     }
 
-
+    //
+    public User changeNameById(int id, String name) {
+        for (User user : users) {
+            if (user.getId() == id) {
+                user.setName(name);
+                user.setJoinDate(new Date());
+                return user;
+            }
+        }
+        return null;
+    }
 }

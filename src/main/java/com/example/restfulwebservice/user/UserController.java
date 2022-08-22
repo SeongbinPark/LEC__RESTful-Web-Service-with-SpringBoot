@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -56,6 +57,15 @@ public class UserController {
         User user = service.deleteById(id);
 
         if (user == null) {//삭제할 데이터가 없다.
+            throw new UserNotFoundExcetiion(String.format("ID[%s] not found", id));
+        }
+    }
+
+    @PutMapping("/users/{id}")
+    public void updateName(@PathVariable int id, @RequestBody String name) {
+
+        User changedUser = service.changeNameById(id, name);
+        if (changedUser == null) {
             throw new UserNotFoundExcetiion(String.format("ID[%s] not found", id));
         }
     }
