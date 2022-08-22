@@ -26,7 +26,12 @@ public class UserController {
     //사용자 개별 조회
     @GetMapping("/users/{id}")//이때 String인 id 가 @pathVariable의 int인 id로 자동변환
     public User retrieveUser(@PathVariable int id) {
-        return service.findOne(id);
+        User user = service.findOne(id);
+
+        if (user == null) {
+            throw new UserNotFoundExcetiion(String.format("ID[%s] not found", id));
+        }
+        return user;
     }
 
     //사용자 추가
