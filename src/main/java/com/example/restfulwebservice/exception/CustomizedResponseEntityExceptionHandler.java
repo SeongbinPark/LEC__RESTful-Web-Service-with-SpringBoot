@@ -1,12 +1,13 @@
 package com.example.restfulwebservice.exception;
 
 
-import com.example.restfulwebservice.user.UserNotFoundExcetiion;
+import com.example.restfulwebservice.user.UserNotFoundException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -35,13 +36,32 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     // handleAllExceptions 는 @ExceptionHandler(Exception.class) 때문에 모든 예외를 받는 클래스 이므로
     // controller에서 UserNotFoundExcetiion 라는 예외만 받는 핸들러를 만들자
 
-    @ExceptionHandler(UserNotFoundExcetiion.class)//이 메서드가 exceptionHandler로 사용될 수 있음
+    @ExceptionHandler(UserNotFoundException.class)//이 메서드가 exceptionHandler로 사용될 수 있음
     public final ResponseEntity<Object> handleUserNotFoundException(Exception ex, WebRequest request) {
         ExceptionResponse exceptionResponse =
                 new ExceptionResponse(new Date(), ex.getMessage(), request.getDescription((false)));
 
         return new ResponseEntity<Object>(exceptionResponse, HttpStatus.NOT_FOUND);
         //Object라 제네릭타입 생략가능, 일반적인 500번 에러 지정.
+    }
+
+    /**
+     * ResponseEntityExceptionHandler 의 메서드를 그대로 가져옴 ( 오버라이딩 하기위해 )
+     * @param ex : 발생한 Exception의 객체
+     * @param headers : Request의 header 값
+     * @param status : Request의 상태코드
+     * @param request : Request
+     * @return
+     */
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+                                                                  HttpHeaders headers,
+                                                                  HttpStatus status,
+                                                                  WebRequest request) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), "Validation Failed",
+                ex.getBindingResult().toString());
+
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);//적당한 상태코드
     }
 }
 //어떤 컨트롤러 클래스가 실행 되더라도 이 클래스가 실행 될 것이고 이 클래스에서 예외 발생 시 우리가 선언시킨 handleAllExceptions 메서드가 실행된다.

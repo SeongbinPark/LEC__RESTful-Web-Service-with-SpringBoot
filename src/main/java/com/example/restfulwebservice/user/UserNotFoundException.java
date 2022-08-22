@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 // 5XX -> Server Error
 // 사용자 없는 예외 -> 404 Not Found로 주자.
 @ResponseStatus(HttpStatus.NOT_FOUND)
-public class UserNotFoundExcetiion extends RuntimeException {
-    public UserNotFoundExcetiion(String message) {
+public class UserNotFoundException extends RuntimeException {
+    public UserNotFoundException(String message) {
         super(message);
     }
 }

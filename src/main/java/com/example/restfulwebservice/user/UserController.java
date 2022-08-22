@@ -30,14 +30,14 @@ public class UserController {
         User user = service.findOne(id);
 
         if (user == null) {
-            throw new UserNotFoundExcetiion(String.format("ID[%s] not found", id));
+            throw new UserNotFoundException(String.format("ID[%s] not found", id));
         }
         return user;
     }
 
     //사용자 추가
     @PostMapping("/users")
-    public ResponseEntity<User> createUser(@RequestBody User user) {//form형태가 아닌 JSON, XML같은 Object형태의 데이터를 받기 위해선 @RequestBody
+    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {//form형태가 아닌 JSON, XML같은 Object형태의 데이터를 받기 위해선 @RequestBody
         User savedUser = service.save(user);
 
         //응답코드를 제어 ->SUCB 사용. -> 서버에서 반환하려는 데이터를 ResponseEntity에 담아 전달
@@ -57,16 +57,16 @@ public class UserController {
         User user = service.deleteById(id);
 
         if (user == null) {//삭제할 데이터가 없다.
-            throw new UserNotFoundExcetiion(String.format("ID[%s] not found", id));
+            throw new UserNotFoundException(String.format("ID[%s] not found", id));
         }
     }
 
     @PutMapping("/users/{id}")
-    public void updateName(@PathVariable int id, @RequestBody String name) {
+    public void updateName(@PathVariable int id, @RequestBody User user) {
 
-        User changedUser = service.changeNameById(id, name);
+        User changedUser = service.changeNameById(id, user);
         if (changedUser == null) {
-            throw new UserNotFoundExcetiion(String.format("ID[%s] not found", id));
+            throw new UserNotFoundException(String.format("ID[%s] not found", id));
         }
     }
 }

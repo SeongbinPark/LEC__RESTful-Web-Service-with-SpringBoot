@@ -55,10 +55,10 @@ public class UserDaoService {//DB연결은 Section 5에서
     }
 
     //
-    public User changeNameById(int id, String name) {
+    public User changeNameById(int id, User newUser) {
         for (User user : users) {
             if (user.getId() == id) {
-                user.setName(name);
+                user.setName(newUser.getName());
                 user.setJoinDate(new Date());
                 return user;
             }
