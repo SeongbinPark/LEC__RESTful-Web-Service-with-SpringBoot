@@ -43,8 +43,13 @@ public class AdminUserController { // 그냥 userController보다 좀 더 중요
         //===Filter===//
     }
 
+
+
     //사용자 개별 조회 V1
-    @GetMapping("/v1/users/{id}")//이때 String인 id 가 @pathVariable의 int인 id로 자동변환
+//    @GetMapping("/v1/users/{id}")//이때 String인 id 가 @pathVariable의 int인 id로 자동변환
+//    @GetMapping(value = "/users/{id}/",params = "version=1")//쿼리파라미터 이용한 방법
+//    @GetMapping(value = "/users/{id}", headers = "X-API-VERSION=1")//헤더 키 이름은 임의 정함.
+    @GetMapping(value = "/users/{id}", produces = "application/vnd.company.appv1+json")
     public MappingJacksonValue retrieveUserV1(@PathVariable int id) {
         User user = service.findOne(id);
 
@@ -66,7 +71,10 @@ public class AdminUserController { // 그냥 userController보다 좀 더 중요
     }
 
     //사용자 개별 조회 V2
-    @GetMapping("/v2/users/{id}")//이때 String인 id 가 @pathVariable의 int인 id로 자동변환
+//    @GetMapping("/v2/users/{id}")//이때 String인 id 가 @pathVariable의 int인 id로 자동변환
+//    @GetMapping(value = "/users/{id}/", params = "version=2")
+//    @GetMapping(value = "/users/{id}", headers = "X-API-VERSION=2")//헤더 키 이름은 임의 정함.
+    @GetMapping(value = "/users/{id}", produces = "application/vnd.company.appv2+json")//produces에 MIME type 지정.
     public MappingJacksonValue retrieveUserV2(@PathVariable int id) {
         User user = service.findOne(id);//이거 고치긴 귀찮아서 User -> UserV2로 필드 다 옮길거다.
 
@@ -91,6 +99,21 @@ public class AdminUserController { // 그냥 userController보다 좀 더 중요
         //===Filter===//
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 
 /**
