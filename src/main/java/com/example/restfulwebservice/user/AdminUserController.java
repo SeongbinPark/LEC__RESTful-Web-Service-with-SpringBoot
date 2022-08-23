@@ -26,8 +26,20 @@ public class AdminUserController { // 그냥 userController보다 좀 더 중요
 
     //사용자 전체 목록 조회
     @GetMapping("/users")
-    public List<User> retrieveAllUsers() {
-        return service.findAll();
+    public MappingJacksonValue retrieveAllUsers() {
+        List<User> users = service.findAll();
+
+        //===Filter===//
+        SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter
+                .filterOutAllExcept("id", "name", "joinDate", "ssn");
+
+        FilterProvider filters = new SimpleFilterProvider().addFilter("UserInfo", filter);
+
+        MappingJacksonValue mapping = new MappingJacksonValue(users);
+        mapping.setFilters(filters);
+
+        return mapping;
+        //===Filter===//
     }
 
     //사용자 개별 조회
@@ -38,9 +50,9 @@ public class AdminUserController { // 그냥 userController보다 좀 더 중요
         if (user == null) {
             throw new UserNotFoundException(String.format("ID[%s] not found", id));
         }
-
+        //===Filter===//
         SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter
-                .filterOutAllExcept("id", " name", "joinDate", "ssn");
+                .filterOutAllExcept("id", "name", "joinDate", "ssn");
 
         FilterProvider filters = new SimpleFilterProvider().addFilter("UserInfo", filter);
 
@@ -48,6 +60,8 @@ public class AdminUserController { // 그냥 userController보다 좀 더 중요
         mapping.setFilters(filters);
 
         return mapping;
+        //===Filter===//
+
     }
 }
 
