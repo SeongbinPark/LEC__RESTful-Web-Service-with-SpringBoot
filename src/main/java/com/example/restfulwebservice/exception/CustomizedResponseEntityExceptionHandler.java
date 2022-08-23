@@ -46,7 +46,7 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     }
 
     /**
-     * ResponseEntityExceptionHandler 의 메서드를 그대로 가져옴 ( 오버라이딩 하기위해 )
+     * ResponseEntityExceptionHandler 의 메서드를 그대로 가져옴 ( 오버라이딩 )
      * @param ex : 발생한 Exception의 객체
      * @param headers : Request의 header 값
      * @param status : Request의 상태코드
