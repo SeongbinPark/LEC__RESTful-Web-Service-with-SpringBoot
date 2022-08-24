@@ -14,3 +14,15 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
     #==Failed to start bean 'documentationPluginsBootstrapper' 에러 때문에 추가. Swagger관련. 해결못함.
+  devtools:
+    livereload:
+      enabled: true
+  security:
+    user:
+      name: username
+      password: password
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

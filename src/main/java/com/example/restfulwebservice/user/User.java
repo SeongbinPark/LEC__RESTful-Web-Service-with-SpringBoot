@@ -16,7 +16,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 //@JsonIgnoreProperties({"password", "ssn"})
-@JsonFilter("UserInfo")//필터이름.(컨트롤러, 서비스클래스에서 사용가능)
+//@JsonFilter("UserInfo")//필터이름.(컨트롤러, 서비스클래스에서 사용가능)
 public class User {
     private Integer id;
 
