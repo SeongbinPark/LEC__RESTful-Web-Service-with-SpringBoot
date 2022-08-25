@@ -35,6 +35,8 @@ management:
 
 jpa:
   show-sql: true
+  hibernate:
+    ddl-auto: create
 
 h2:
   console:

@@ -16,7 +16,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Configuration
-@EnableWebMvc
+//@EnableWebMvc
 public class SwaggerConfig { ///swagger-ui/index.html
 
     @Bean
