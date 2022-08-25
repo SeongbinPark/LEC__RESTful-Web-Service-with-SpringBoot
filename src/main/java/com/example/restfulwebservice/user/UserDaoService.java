@@ -15,9 +15,9 @@ public class UserDaoService {//DB연결은 Section 5에서
     private static int usersCount = 3;
 
     static {  //users가 static이므로 static블록에서 사용가능.
-        users.add(new User(1, "Park", new Date(), "pass1", "701010-1111111"));
-        users.add(new User(2, "Kim", new Date(), "pass2", "701010-1111111"));
-        users.add(new User(3, "Choi", new Date(), "pass3", "701010-1111111"));
+//        users.add(new User(1, "Park", new Date(), "pass1", "701010-1111111"));
+//        users.add(new User(2, "Kim", new Date(), "pass2", "701010-1111111"));
+//        users.add(new User(3, "Choi", new Date(), "pass3", "701010-1111111"));
     }
 
     public List<User> findAll() { //사용자 전체 목록

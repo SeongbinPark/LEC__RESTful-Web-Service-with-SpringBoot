@@ -1,6 +1,8 @@
 package com.example.restfulwebservice.user;
 
 
+import com.example.restfulwebservice.post.Post;
+import com.example.restfulwebservice.post.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import java.util.Optional;
 public class UserJpaController {
 
     private final UserRepository userRepository;
+    private final PostRepository postRepository;
 
     @GetMapping("/users")
     public List<User> retrieveAllUsers() {
@@ -54,6 +57,20 @@ public class UserJpaController {
                 .toUri();//결과를 Uri 형태로 변환 (반환타입 : URI)
 
         return ResponseEntity.created(location).build();
+
+    }
+
+
+    //
+    @GetMapping("/users/{id}/posts")
+    public List<Post> retrieveAllPostsByUser(@PathVariable int id) {
+        Optional<User> findUser = userRepository.findById(id);
+        if (!findUser.isPresent()) {
+            throw new UserNotFoundException("no user");
+        }
+
+        return findUser.get().getPosts();
+
 
     }
 }
